@@ -1,0 +1,24 @@
+{
+  "name": "the-game-of-dice",
+  "version": "1.0.0",
+  "description": "A fun game of dice.",
+  "main": "index.js",
+  "scripts": {
+    "start-game": "node index.js",
+    "test": "mocha spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamsantto/the-game-of-dice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iamsantto/the-game-of-dice/issues"
+  },
+  "homepage": "https://github.com/iamsantto/the-game-of-dice#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^8.2.1"
+  }
+}
