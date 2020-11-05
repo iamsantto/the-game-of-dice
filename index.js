@@ -15,6 +15,7 @@
     afterWin: ': Hurray, you won. Your rank is ',
     missNextTurn: ' twice consecutively, you will miss the next turn.',
     missThisTurn: ': Misses this turn.',
+    rollAgain: ': You get to roll again.',
     rollPrompt: ': Its your turn to roll the dice, press any key to roll.',
     setup: 'Setting up player order...',
     startGame: 'Ready. Lets begin.\n'
@@ -25,9 +26,7 @@
     output: process.stdout
   });
 
-  var generateRandNumber = (maxValue) => {
-    return Math.floor(Math.random()*(maxValue) + 1);
-  }
+  var generateRandNumber = (maxValue) => Math.floor(Math.random()*(maxValue) + 1);
 
   const generatePlayerOrder = () => {
     console.log(log.setup);
@@ -68,7 +67,10 @@
       return;
     }
 
-    if (value === maxDiceValue) await promptDiceRoll(player);
+    if (value === maxDiceValue) {
+      console.log(player + log.rollAgain);
+      await promptDiceRoll(player);
+    }
   }
 
   const displayScoreCard = () => {
@@ -100,20 +102,17 @@
       for (player in playerPool) {
         if (playerPool[player].skip) {
           console.log(player + log.missThisTurn);
-
           playerPool[player].skip = false;
+
           continue;
         }
 
-        await promptDiceRoll(player).then(() => {
-          displayScoreCard();
-        });
+        await promptDiceRoll(player).then(() => { displayScoreCard(); });
       }
     }
-
-    rl.close();
   }
 
   var playerPool = generatePlayerOrder();
-  startGame();
+
+  startGame().then(() => { rl.close(); });
 })();
