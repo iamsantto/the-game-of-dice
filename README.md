@@ -32,7 +32,7 @@ yarn start-game 3 10
 
 ---
 ## Test Cases
-Run this command once to install dependencies:
+Run this command to install dependencies:
 ```
 yarn --dev
 ```
