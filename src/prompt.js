@@ -5,10 +5,11 @@ var keypress = () => {
     process.stdin.setRawMode(false);
     resolve();
   }))
-}
+};
 
 module.exports = {
   prompt: async (player) => {
+    logger(player, 'prompt');
     await keypress();
   }
 }

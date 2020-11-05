@@ -15,8 +15,6 @@ module.exports = {
           continue;
         }
 
-        logger(player, 'prompt');
-
         await prompt(player)
           .then(async () => {
             await roll(player, config)
