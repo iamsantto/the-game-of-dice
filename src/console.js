@@ -3,7 +3,7 @@ var log = {
   repeat: ': You get to roll again.',
   roll: ': You rolled a ',
   skip: ': Misses this turn.',
-  skipNext: ' twice consecutively, you will miss the next turn.',
+  skipNext: ': You will miss the next turn, you rolled two consecutive ',
   win: ': Hurray, you won. Your rank is '
 };
 

@@ -4,8 +4,8 @@
 
   var config = {
     maxDiceValue: 6,
-    maxPlayers: process.argv[2], // N - number of players
-    maxPoints: process.argv[3], // M - points to win
+    maxPlayers: parseInt(process.argv[2]), // N - number of players
+    maxPoints: parseInt(process.argv[3]), // M - points to win
     minDiceValue: 1
   }
 

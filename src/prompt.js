@@ -1,15 +1,14 @@
-var keypress = () => {
-  if (process.stdin.isTTY) process.stdin.setRawMode(true);
-
-  return new Promise(resolve => process.stdin.once('data', () => {
-    process.stdin.setRawMode(false);
-    resolve();
-  }))
-};
+const { logger } = require('./console');
 
 module.exports = {
-  prompt: async (player) => {
+  prompt: (player) => {
     logger(player, 'prompt');
-    await keypress();
+
+    if (process.stdin.isTTY) process.stdin.setRawMode(true);
+
+    return new Promise(resolve => process.stdin.once('data', () => {
+      process.stdin.setRawMode(false);
+      resolve();
+    }))
   }
 }
