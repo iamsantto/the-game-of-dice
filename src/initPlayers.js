@@ -2,7 +2,7 @@ var { Player } = require('../models/Player');
 var { randomizer } = require('./randomizer');
 
 module.exports = {
-  init: (maxPlayers) => {
+  initPlayers: (maxPlayers) => {
     var order = {};
 
     while (Object.keys(order).length < maxPlayers) {

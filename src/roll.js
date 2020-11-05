@@ -1,5 +1,5 @@
-const { logger } = require("./console");
-const { randomizer } = require("./randomizer");
+var { logger } = require("./console");
+var { randomizer } = require("./randomizer");
 
 module.exports = {
   roll: (name, maxDiceValue) => {

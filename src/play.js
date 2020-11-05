@@ -1,11 +1,11 @@
-const { init } = require('./init');
-const { logger, leaderboard } = require('./console');
-const { prompt } = require('./prompt');
-const { roll } = require('./roll');
+var { initPlayers } = require('./initPlayers');
+var { logger, leaderboard } = require('./console');
+var { prompt } = require('./prompt');
+var { roll } = require('./roll');
 
 module.exports = {
   play: async ({ maxPlayers, minDiceValue, maxPoints, maxDiceValue}) => {
-    var pool = init(maxPlayers);
+    var pool = initPlayers(maxPlayers);
     var winners = [];
 
     var routine = async (name) => {

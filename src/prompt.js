@@ -1,4 +1,4 @@
-const { logger } = require('./console');
+var { logger } = require('./console');
 
 module.exports = {
   prompt: (player) => {
