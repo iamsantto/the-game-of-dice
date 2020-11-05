@@ -1,10 +1,11 @@
 (() => {
   var readline = require('readline');
-  var { play } = require('./src');
+  var { play } = require('./src/play');
+
   var config = {
+    maxDiceValue: 6,
     maxPlayers: process.argv[2], // N - number of players
     maxPoints: process.argv[3], // M - points to win
-    maxDiceValue: 6,
     minDiceValue: 1
   }
 
@@ -12,8 +13,6 @@
     input: process.stdin,
     output: process.stdout
   });
-
-  logger('start');
 
   play(config)
     .then(() => {

@@ -4,10 +4,15 @@ var log = {
   roll: ': You rolled a ',
   skip: ': Misses this turn.',
   skipNext: ' twice consecutively, you will miss the next turn.',
-  start: 'Ready. Lets begin.',
   win: ': Hurray, you won. Your rank is '
-}
+};
 
 module.exports = {
-  logger: (key, player = '') => console.log(`${player}${log[key]}`)
-}
+  logger: (
+    player = '',
+    key,
+    number = ''
+  ) => console.log(`${player}${log[key]}${number}`),
+
+  leaderboard: (pool) => console.table(pool, [ 'score', 'rank' ])
+};

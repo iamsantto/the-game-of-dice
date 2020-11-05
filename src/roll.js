@@ -1,5 +1,9 @@
-modules.exports = {
-  roll: async function(player) {
+module.exports = {
+  roll: async function(player, {
+    minDiceValue,
+    maxPoints,
+    maxDiceValue
+  }) {
     var value = generateRandNumber(maxDiceValue);
     console.log(player + log.afterRoll + value + '.');
 
