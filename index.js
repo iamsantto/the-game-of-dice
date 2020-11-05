@@ -1,20 +1,14 @@
 (() => {
-  var readline = require('readline');
-  var { play } = require('./src/play');
+  const readline = require('readline');
+  const { play } = require('./src/play');
+  const { maxPlayers } = require('./config');
 
-  var config = {
-    maxDiceValue: 6,
-    maxPlayers: parseInt(process.argv[2]), // N - number of players
-    maxPoints: parseInt(process.argv[3]), // M - points to win
-    minDiceValue: 1
-  }
-
-  var rl = readline.createInterface({
+  const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
   });
 
-  play(config)
+  play(maxPlayers)
     .then(() => {
       rl.close();
     });

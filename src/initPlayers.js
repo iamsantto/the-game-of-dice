@@ -1,12 +1,12 @@
-var { Player } = require('../models/Player');
-var { randomizer } = require('./randomizer');
+const { Player } = require('../models/Player');
+const { randomizer } = require('../utils/randomizer');
 
 module.exports = {
   initPlayers: (maxPlayers) => {
-    var order = {};
+    let order = {};
 
     while (Object.keys(order).length < maxPlayers) {
-      var number = randomizer(maxPlayers);
+      const number = randomizer(maxPlayers);
 
       if (!(number in order)
         && (order['Player-' + number] = new Player()));

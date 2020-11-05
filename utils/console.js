@@ -1,4 +1,4 @@
-var log = {
+const log = {
   prompt: ': Its your turn to roll the dice, press any key to roll.',
   repeat: ': You get to roll again.',
   roll: ': You rolled a ',

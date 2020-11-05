@@ -1,46 +1,17 @@
-var { initPlayers } = require('./initPlayers');
-var { logger, leaderboard } = require('./console');
-var { prompt } = require('./prompt');
-var { roll } = require('./roll');
+const { calculate } = require('./calculate');
+const { getState, initPool } = require('../models/State');
+const { logger, leaderboard } = require('../utils/console');
+const { prompt } = require('../utils/prompt');
+const { roll } = require('../utils/roll');
 
 module.exports = {
-  play: async ({ maxPlayers, minDiceValue, maxPoints, maxDiceValue}) => {
-    var pool = initPlayers(maxPlayers);
-    var winners = [];
-
-    var routine = async (name) => {
-      await prompt(name)
-        .then(() => calculate(name, roll(name, maxDiceValue)));
-    }
-
-    var calculate = async (name, value) => {
-      var player = pool[name];
-
-      if (player.previous === minDiceValue && value === minDiceValue) {
-        logger(name, 'skipNext', value)
-        player.skip = true
-      }
-
-      player.previous = value;
-      player.score += value;
-
-      if (player.score >= maxPoints) {
-        winners.push(name);
-        player.rank = winners.length;
-
-        logger(name, 'win', player.rank);
-        return;
-      }
-
-      if (value === maxDiceValue) {
-        logger(name, 'repeat');
-        await routine(name);
-      }
-    }
+  play: async (maxPlayers) => {
+    let pool = initPool();
+    let winners = [];
 
     while (winners.length < maxPlayers) {
       for (name in pool) {
-        var player = pool[name];
+        const player = pool[name];
         if (player.rank) continue;
         if (player.skip) {
           logger(name, 'skip');
@@ -49,7 +20,15 @@ module.exports = {
           continue;
         }
 
-        await routine(name).then(() => leaderboard(pool));
+        await prompt(name)
+          .then(() => calculate(name, roll(name)))
+          .then(() => {
+            const state = getState();
+            pool = state.pool;
+            winners = state.winners;
+
+            leaderboard(pool)
+          });
       }
     }
   }
