@@ -1,30 +1,40 @@
-(async () => {
+(() => {
   var readline = require("readline");
 
-  var maxPlayers = process.argv[2];
-  var maxPoints = process.argv[3];
+  var maxPlayers = process.argv[2]; // N - number of players
+  var maxPoints = process.argv[3]; // M - points to win
+
   var maxDiceValue = 6;
   var minDiceValue = 1;
+
   var scorecard = {};
-  var skipTracker = {};
-  var rankings = [];
+  var leaderboard = [];
+
+  var log = {
+    afterRoll: ': You rolled a ',
+    afterWin: ': Hurray, you won. Your rank is ',
+    missNextTurn: ' twice consecutively, you will miss the next turn.',
+    missThisTurn: ': Misses this turn.',
+    rollPrompt: ': Its your turn to roll the dice, press any key to roll.',
+    setup: 'Setting up player order...',
+    startGame: 'Ready. Lets begin.\n'
+  }
 
   var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
   });
 
-  console.log('Setting up player order...');
-
-  var getRandNumber = (maxValue) => {
+  var generateRandNumber = (maxValue) => {
     return Math.floor(Math.random()*(maxValue) + 1);
   }
 
   const generatePlayerOrder = () => {
+    console.log(log.setup);
     var order = {};
 
     while (Object.keys(order).length < maxPlayers) {
-      var number = getRandNumber(maxPlayers);
+      var number = generateRandNumber(maxPlayers);
 
       if (!(number in order) && (order['Player-' + number] = {
         lastThrow: 0,
@@ -35,39 +45,38 @@
     return order;
   }
 
-  var playerOrder = generatePlayerOrder();
-
   const playTurn = async (player) => {
-    var number = getRandNumber(maxDiceValue);
-    console.log('You just rolled a ', number + '.');
+    var value = generateRandNumber(maxDiceValue);
+    console.log(player + log.afterRoll + value + '.');
 
-    if (playerOrder[player]['lastThrow'] === minDiceValue && number === minDiceValue) {
-      playerOrder[player]['skip'] = true
-      console.log(player + ': You rolled ' + minDiceValue + ' twice consecutively, you will miss the next turn.')
+    if (playerPool[player]['lastThrow'] === minDiceValue && value === minDiceValue) {
+      console.log(player + log.afterRoll + minDiceValue + log.missNextTurn);
+
+      playerPool[player]['skip'] = true
     }
 
-    playerOrder[player]['lastThrow'] = number;
+    playerPool[player]['lastThrow'] = value;
 
-    player in scorecard ? scorecard[player] += number : scorecard[player] = number;
+    (player in scorecard) ? scorecard[player] += value : scorecard[player] = value;
 
-    if (scorecard[player] > maxPoints) {
-      rankings.push(player)
-      delete playerOrder[player];
+    if (scorecard[player] >= maxPoints) {
+      leaderboard.push(player)
 
-      console.log('Hurray, ' + player +' won. Your rank is ' + rankings.length + '.')
+      console.log(player + log.afterWin + leaderboard.length + '.');
+      delete playerPool[player];
+
       return;
     }
 
-    if (number === maxDiceValue) await promptDiceRoll(player);
+    if (value === maxDiceValue) await promptDiceRoll(player);
   }
 
   const displayScoreCard = () => {
-    console.log(playerOrder, 'order');
     console.log(scorecard, 'scorecard');
-    console.log(rankings, 'leaderboard');
+    console.log(leaderboard, 'leaderboard');
   }
 
-  var keypress = async () => {
+  var keypress = () => {
     if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
     return new Promise(resolve => process.stdin.once('data', () => {
@@ -77,25 +86,34 @@
   }
 
   var promptDiceRoll = async (player) => {
-    console.log(player + ': Its your turn to roll the dice, press any key to roll.');
+    console.log(player + log.rollPrompt);
 
     await keypress().then(async () => {
       await playTurn(player);
     });
   }
 
-  while (rankings.length < maxPlayers) {
-    for (player in playerOrder) {
-      if (playerOrder[player].skip) {
-        console.log(player + 'misses this turn.');
-        playerOrder[player].skip = false;
-        continue;
+  var startGame = async () => {
+    console.log(log.startGame);
+
+    while (leaderboard.length < maxPlayers) {
+      for (player in playerPool) {
+        if (playerPool[player].skip) {
+          console.log(player + log.missThisTurn);
+
+          playerPool[player].skip = false;
+          continue;
+        }
+
+        await promptDiceRoll(player).then(() => {
+          displayScoreCard();
+        });
       }
-      await promptDiceRoll(player).then(() => {
-        displayScoreCard();
-      });
     }
+
+    rl.close();
   }
 
-  rl.close();
+  var playerPool = generatePlayerOrder();
+  startGame();
 })();
