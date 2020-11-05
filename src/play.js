@@ -16,12 +16,12 @@ module.exports = {
     var calculate = async (name, value) => {
       var player = pool[name];
 
-      if (player.lastThrow === minDiceValue && value === minDiceValue) {
+      if (player.previous === minDiceValue && value === minDiceValue) {
         logger(name, 'skipNext', value)
         player.skip = true
       }
 
-      player.lastThrow = value;
+      player.previous = value;
       player.score += value;
 
       if (player.score >= maxPoints) {
