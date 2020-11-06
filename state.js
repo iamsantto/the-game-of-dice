@@ -9,4 +9,4 @@ let state = {
 module.exports = {
   getState: () => state,
   setState: nextState => { state = nextState; }
-}
+};

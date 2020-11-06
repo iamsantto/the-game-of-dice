@@ -1,7 +1,7 @@
 (() => {
   const readline = require('readline');
-  const { play } = require('./src/play');
   const { maxPlayers } = require('./config');
+  const { play } = require('./src/play');
 
   const rl = readline.createInterface({
     input: process.stdin,
