@@ -3,7 +3,7 @@ const { randomizer } = require('../utils/randomizer');
 
 module.exports = {
   initPlayers: (maxPlayers) => {
-    let order = {};
+    const order = {};
 
     while (Object.keys(order).length < maxPlayers) {
       const number = randomizer(maxPlayers);
