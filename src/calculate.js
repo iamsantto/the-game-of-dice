@@ -12,8 +12,8 @@ module.exports = {
     const player = pool[name];
 
     if (player.previous === minDiceValue && value === minDiceValue) {
-      logger(name, 'skipNext', value)
-      player.skip = true
+      logger(`${name}: You rolled two consecutive ${value}s, you will miss your next turn.`);
+      player.skip = true;
     }
 
     player.previous = value;
@@ -25,13 +25,13 @@ module.exports = {
       winners.push(name);
       player.rank = winners.length;
 
-      logger(name, 'win', player.rank);
+      logger(`${name}: You won. Your rank is ${player.rank}.`);
       setState(state);
       return;
     }
 
     if (value === maxDiceValue) {
-      logger(name, 'repeat');
+      logger(`${name}: You get to roll again.`);
       await prompt(name)
       .then(() => module.exports.calculate(name, roll(name)));
     }

@@ -6,7 +6,7 @@ module.exports = {
   roll: (name) => {
     const value = randomizer(maxDiceValue);
 
-    logger(name, 'roll', value);
+    logger(`${name}: You rolled a ${value}.`);
     return value;
   }
 };

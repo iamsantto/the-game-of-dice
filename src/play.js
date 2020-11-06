@@ -1,6 +1,6 @@
 const { calculate } = require('./calculate');
 const { getState, initPool } = require('../state');
-const { logger, leaderboard } = require('../utils/console');
+const { logger, tabulate } = require('../utils/console');
 const { prompt } = require('../utils/prompt');
 const { roll } = require('../utils/roll');
 
@@ -14,7 +14,7 @@ module.exports = {
         const player = pool[name];
         if (player.rank) continue;
         if (player.skip) {
-          logger(name, 'skip');
+          logger(`${name}: Misses this turn.`);
 
           player.skip = false;
           continue;
@@ -27,7 +27,7 @@ module.exports = {
             pool = state.pool;
             winners = state.winners;
 
-            leaderboard(pool)
+            tabulate(pool, [ 'score', 'rank' ]);
           });
       }
     }

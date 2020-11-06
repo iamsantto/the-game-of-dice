@@ -1,8 +1,8 @@
 const { logger } = require('./console');
 
 module.exports = {
-  prompt: (player) => {
-    logger(player, 'prompt');
+  prompt: (name) => {
+    logger(`${name}: Press any key to roll the die.`);
 
     if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
