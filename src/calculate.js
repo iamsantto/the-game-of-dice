@@ -1,4 +1,4 @@
-const { getState, setState } = require('../models/State');
+const { getState, setState } = require('../state');
 const { maxDiceValue, maxPoints, minDiceValue } = require('../config');
 const { logger } = require('../utils/console');
 const { prompt } = require('../utils/prompt');

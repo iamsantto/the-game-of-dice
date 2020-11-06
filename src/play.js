@@ -1,5 +1,5 @@
 const { calculate } = require('./calculate');
-const { getState, initPool } = require('../models/State');
+const { getState, initPool } = require('../state');
 const { logger, leaderboard } = require('../utils/console');
 const { prompt } = require('../utils/prompt');
 const { roll } = require('../utils/roll');

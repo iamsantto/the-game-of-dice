@@ -1,5 +1,5 @@
 const { Player } = require('../models/Player');
-const { randomizer } = require('../utils/randomizer');
+const { randomizer } = require('./randomizer');
 
 module.exports = {
   initPlayers: (maxPlayers) => {

@@ -1,5 +1,5 @@
-const { initPlayers } = require('../src/initPlayers');
-const { maxPlayers } = require('../config');
+const { initPlayers } = require('./utils/initPlayers');
+const { maxPlayers } = require('./config');
 
 let state = {
   pool: {},
