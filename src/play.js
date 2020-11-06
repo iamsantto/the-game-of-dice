@@ -6,8 +6,7 @@ const { roll } = require('../utils/roll');
 
 module.exports = {
   play: async (maxPlayers) => {
-    let pool = initPool();
-    let winners = [];
+    let { pool, winners } = getState();
 
     while (winners.length < maxPlayers) {
       for (name in pool) {
