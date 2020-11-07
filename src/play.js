@@ -5,7 +5,7 @@ const { prompt } = require('../utils/prompt');
 const { roll } = require('../utils/roll');
 
 module.exports = {
-  play: async (maxPlayers) => {
+  play: async (maxPlayers, maxPoints) => {
     let { pool, winners } = getState();
 
     while (winners.length < maxPlayers) {
@@ -21,7 +21,7 @@ module.exports = {
         }
 
         await prompt(name)
-          .then(() => calculate(name, roll(name)))
+          .then(() => calculate(name, roll(name), maxPoints))
           .then(() => {
             const state = getState();
             pool = state.pool;
@@ -31,5 +31,7 @@ module.exports = {
           });
       }
     }
+
+    return pool;
   }
 };
