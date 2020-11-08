@@ -19,6 +19,8 @@
   "homepage": "https://github.com/iamsantto/the-game-of-dice#readme",
   "dependencies": {},
   "devDependencies": {
-    "mocha": "^8.2.1"
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
+    "sinon": "^9.2.1"
   }
 }

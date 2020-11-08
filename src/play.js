@@ -1,12 +1,12 @@
 const { calculate } = require('./calculate');
-const { getState } = require('../state');
+const { getState, initPool } = require('../state');
 const { logger, tabulate } = require('../utils/console');
 const { prompt } = require('../utils/prompt');
 const { roll } = require('../utils/roll');
 
 module.exports = {
   play: async (maxPlayers, maxPoints) => {
-    let { pool, winners } = getState();
+    let { pool, winners } = initPool(maxPlayers);
 
     while (winners.length < maxPlayers) {
       for (name in pool) {
@@ -32,6 +32,6 @@ module.exports = {
       }
     }
 
-    return pool;
+     return pool;
   }
 };

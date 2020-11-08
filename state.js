@@ -1,12 +1,15 @@
 const { initPlayers } = require('./utils/initPlayers');
-const { maxPlayers } = require('./config');
 
 let state = {
-  pool: initPlayers(maxPlayers),
+  pool: {},
   winners: []
 };
 
 module.exports = {
   getState: () => state,
+  initPool: (maxPlayers) => {
+    state.pool = initPlayers(maxPlayers);
+    return state;
+  },
   setState: nextState => { state = nextState; }
-};
+}
