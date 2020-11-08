@@ -18,10 +18,10 @@ describe('play game', () => {
   it('should return player leaderboard', async () => {
     const result = await play(2,5);
 
-    expect(result['Player-1'].score).to.be.above(5);
     expect(result['Player-1'].rank).to.be.above(0);
+    expect(result['Player-1'].score).to.be.above(4);
 
     expect(result['Player-2'].rank).to.be.above(0);
-    expect(result['Player-2'].score).to.be.above(5);
+    expect(result['Player-2'].score).to.be.above(4);
   })
 });
